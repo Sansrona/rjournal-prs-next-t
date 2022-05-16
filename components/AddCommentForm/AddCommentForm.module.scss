@@ -1,0 +1,17 @@
+.form{
+        margin-top: 15px;
+        padding: 17px !important ;
+        background-color:#f7f7f7;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        border-radius:10px;
+    .fieldRoot{
+        &::after, &::before{
+            display: none;
+        }
+        
+        cursor: pointer !important;
+    }
+    .addButton{
+        margin-top: 10px;
+    }
+}
