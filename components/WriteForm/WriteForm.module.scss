@@ -1,0 +1,10 @@
+.inputField{
+    width: 100% !important;
+    &::after, &::before{
+        display: none;
+    }
+    input {
+        font-size: 36px !important;
+        font-weight: 600;
+    }
+}
