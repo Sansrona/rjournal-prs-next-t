@@ -1,5 +1,6 @@
 .inputField{
     width: 100% !important;
+    margin-bottom: 20px;
     &::after, &::before{
         display: none;
     }
@@ -7,4 +8,8 @@
         font-size: 36px !important;
         font-weight: 600;
     }
+}
+.editor{
+    font-size: 18px !important;
+    height: calc(100vh - 220px);
 }
