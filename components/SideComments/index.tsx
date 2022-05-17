@@ -14,7 +14,7 @@ export const SideComments = () => {
   }
 
   return (
-    <div className={clsx(styles.root, !isVisible && styles.rotated)}>
+    <div  className={clsx(styles.root, !isVisible && styles.rotated)}>
       <h3 onClick={toggleIsVisible}>
         Комментарии <ArrowRightIcon />
       </h3>

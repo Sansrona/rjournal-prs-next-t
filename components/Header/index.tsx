@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Paper, Button, IconButton, Avatar } from '@material-ui/core';
+import { Paper, Button, IconButton, Avatar, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
 import {
   SearchOutlined as SearchIcon,
   CreateOutlined as PenIcon,
@@ -8,11 +8,24 @@ import {
   Menu as MenuIcon,
   ExpandMoreOutlined as ArrowBottom,
   NotificationsNoneOutlined as NotificationIcon,
+  PersonOutlineOutlined as UserIcon
 } from '@material-ui/icons';
 
 import styles from './Header.module.scss';
+import { AuthDialog } from '../AuthDialog';
 
 export const Header: React.FC = () => {
+  const [isAuthVisible, setIsAuthVisible] = React.useState(false);
+
+  const openAuthDialog = () => {
+    setIsAuthVisible(true);
+  };
+
+  const closeAuthDialog = () => {
+    setIsAuthVisible(false);
+  };
+
+
   return (
     <Paper classes={{ root: styles.root }} elevation={0}>
       <div className="d-flex align-center">
@@ -45,7 +58,7 @@ export const Header: React.FC = () => {
         <IconButton>
           <NotificationIcon />
         </IconButton>
-        <Link href="/profile/1">
+        {/* <Link href="/profile/1">
           <a className="d-flex align-center">
             <Avatar
               className={styles.avatar}
@@ -54,8 +67,13 @@ export const Header: React.FC = () => {
             />
             <ArrowBottom />
           </a>
-        </Link>
+        </Link> */}
+        <div className={styles.authBtn} onClick={openAuthDialog}>
+          <UserIcon/>
+          Войти
+        </div>
       </div>
+      <AuthDialog onClose={closeAuthDialog} isVisible={isAuthVisible} />
     </Paper>
   );
 };

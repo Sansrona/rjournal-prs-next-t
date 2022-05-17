@@ -62,3 +62,18 @@
     }
   }
 }
+
+.authBtn{
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  &:hover{
+    color: #e5a040;
+  }
+  svg{
+    margin-right: 8px;
+  }
+}

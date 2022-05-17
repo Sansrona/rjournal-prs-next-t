@@ -1,0 +1,43 @@
+.content{
+    width: 70%;
+    margin: 10px auto;
+    .title{
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 15px;
+        color:black;
+    }
+    button{
+        position: relative;
+        img, svg{
+            position: absolute;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+    .miniButtons{
+        display: flex;
+        justify-content: space-between;
+        
+        button{
+            img, svg{
+                height: 20px;
+                position: static;
+            }
+            &:nth-of-type(2){
+                margin: 0 15px;
+            }
+            
+        }
+    }
+    .backBtn{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        cursor: pointer;
+        p{
+            margin-left: 10px;
+        }
+    }
+}

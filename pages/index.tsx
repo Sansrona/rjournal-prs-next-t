@@ -1,7 +1,7 @@
 import { Post } from '../components/Post';
 import { MainLayout } from '../layouts/MainLayout';
 
-export default function Home() {
+export default function Posts() {
   return (
     <MainLayout>
       <Post />
