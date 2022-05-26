@@ -11,6 +11,8 @@ import { loginFormSchema } from '../../../utils/schemas';
 import { FormField } from '../../FormField';
 import { usersApi } from '../../../utils/api';
 import { LoginTypes } from '../../../utils/api/types';
+import { useAppDispatch } from '../../../redux/hooks';
+import { setUserData } from '../../../redux/slices/user';
 
 interface LoginFormProps {
     onOpenMain: () => void;
@@ -18,6 +20,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onOpenMain, onOpenRegister }) => {
+    const dispatch = useAppDispatch();
     const [errorMessage, setErrorMessage] = React.useState('');
     const form = useForm({
         mode: "onChange",
@@ -27,11 +30,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onOpenMain, onOpenRegister
     const onSubmit = async (dto: LoginTypes) => {
         try {
             const data = await usersApi.login(dto);
-            console.log(data);
             setCookie(null, 'rj_token', data['access_token'], {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/'
             });
+            dispatch(setUserData(data));
             setErrorMessage('');
         } catch (error) {
             if(error.response){setErrorMessage(error.response.data.message)}

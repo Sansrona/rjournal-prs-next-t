@@ -11,6 +11,8 @@ import styles from '../AuthDialog.module.scss'
 import { FormField } from '../../FormField';
 import { CreateUserTypes } from '../../../utils/api/types';
 import { usersApi } from '../../../utils/api';
+import { useAppDispatch } from '../../../redux/hooks';
+import { setUserData } from '../../../redux/slices/user';
 
 interface RegisterFormProps {
     onOpenMain: () => void;
@@ -18,6 +20,7 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenMain, onOpenLogin }) => {
+    const dispatch = useAppDispatch();
     const [errorMessage, setErrorMessage] = React.useState('');
     const form = useForm({
         mode: 'onChange',
@@ -28,13 +31,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenMain, onOpenLo
         try {
             const data = await usersApi.register(dto);
             console.log(data);
-            setCookie(null, 'rj_token', data['access_token'], { 
+            setCookie(null, 'rj_token', data['access_token'], {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/'
             });
             setErrorMessage('');
+
+            dispatch(setUserData(data));
         } catch (error) {
-            if(error.response){setErrorMessage(error.response.data.message)}
+            if (error.response) { setErrorMessage(error.response.data.message) }
         }
     };
 
