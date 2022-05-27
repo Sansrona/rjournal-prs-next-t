@@ -10,8 +10,16 @@ export const usersApi = {
         const { data } = await instance.post('auth/register', dto);
         return data;
     },
-    async login(dto: LoginTypes): Promise<ResponseUserTypes>{
+    async login(dto: LoginTypes): Promise<ResponseUserTypes> {
         const { data } = await instance.post('auth/login', dto);
         return data
+    },
+    async getMe(token: string): Promise<ResponseUserTypes> {
+        const { data } = await instance.get('users/me', {
+            headers: { 
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return data;
     }
 }
