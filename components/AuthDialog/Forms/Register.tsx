@@ -10,9 +10,10 @@ import Alert from '@material-ui/lab/Alert';
 import styles from '../AuthDialog.module.scss'
 import { FormField } from '../../FormField';
 import { CreateUserTypes } from '../../../utils/api/types';
-import { usersApi } from '../../../utils/api';
+import { usersApi } from '../../../utils/api/user';
 import { useAppDispatch } from '../../../redux/hooks';
 import { setUserData } from '../../../redux/slices/user';
+import { Api } from '../../../utils/api';
 
 interface RegisterFormProps {
     onOpenMain: () => void;
@@ -29,7 +30,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenMain, onOpenLo
 
     const onSubmit = async (dto: CreateUserTypes) => {
         try {
-            const data = await usersApi.register(dto);
+            const data = await Api().user.register(dto);
             console.log(data);
             setCookie(null, 'rj_token', data['access_token'], {
                 maxAge: 30 * 24 * 60 * 60,

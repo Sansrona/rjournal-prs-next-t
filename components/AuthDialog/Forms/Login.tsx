@@ -9,10 +9,11 @@ import { setCookie } from 'nookies';
 import styles from '../AuthDialog.module.scss'
 import { loginFormSchema } from '../../../utils/schemas';
 import { FormField } from '../../FormField';
-import { usersApi } from '../../../utils/api';
+import { usersApi } from '../../../utils/api/user';
 import { LoginTypes } from '../../../utils/api/types';
 import { useAppDispatch } from '../../../redux/hooks';
 import { setUserData } from '../../../redux/slices/user';
+import { Api } from '../../../utils/api';
 
 interface LoginFormProps {
     onOpenMain: () => void;
@@ -29,7 +30,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onOpenMain, onOpenRegister
 
     const onSubmit = async (dto: LoginTypes) => {
         try {
-            const data = await usersApi.login(dto);
+            const data = await Api().user.login(dto);
             setCookie(null, 'rj_token', data['access_token'], {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/'

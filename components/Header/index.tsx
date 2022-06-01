@@ -28,6 +28,12 @@ export const Header: React.FC = () => {
     setIsAuthVisible(false);
   };
 
+  React.useEffect(() => {
+    if (isAuthVisible && userData) {
+      setIsAuthVisible(false);
+    }
+  }, [isAuthVisible, userData])
+
 
   return (
     <Paper classes={{ root: styles.root }} elevation={0}>

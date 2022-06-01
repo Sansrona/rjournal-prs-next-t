@@ -4,22 +4,23 @@ import styles from "./WriteForm.module.scss";
 import dynamic from 'next/dynamic'
 
 interface WriteFormProps {
-    title?: string;
+    data?: any;
 }
 
-const Editor = dynamic(() => import("../Editor").then(m => m), { ssr: false })
+const Editor = dynamic(() => import("../Editor").then(m => m.Editor), { ssr: false })
 
-const WriteForm: React.FC<WriteFormProps> = ({ title }) => {
-
+const WriteForm: React.FC<WriteFormProps> = () => {
+    const [title, setTitle] = React.useState('');
+    const [blocks, setBlocks] = React.useState([]);
 
     return (
         <div>
-            <Input classes={{ root: styles.inputField }} placeholder="Заголовок" defaultValue={title}></Input>
+            <Input value={title} onChange={e => setTitle(e.target.value)} classes={{ root: styles.inputField }} placeholder="Заголовок"></Input>
             <div className={styles.editor}>
-                <Editor />
+                <Editor onChangeBlocks={arr => setBlocks(arr)}/>
             </div>
             <Button variant="contained" color="primary" >
-              Опубликовать
+                Опубликовать
             </Button>
         </div>
     )
