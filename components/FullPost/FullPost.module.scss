@@ -14,7 +14,12 @@
   margin-bottom: 20px !important;
   font-size: 36px !important;
 }
-
+.text{
+  a{
+    text-decoration: underline;
+    color: #f48a04;
+  }
+}
 .userInfo {
   display: flex;
   align-items: center;

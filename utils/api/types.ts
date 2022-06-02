@@ -27,5 +27,6 @@ export type PostItem = {
     createdAt: string;
     updatedAt: string;
     tags?: string;
+    user:ResponseUserTypes,
     views?: number;
 } & PostTypes;
