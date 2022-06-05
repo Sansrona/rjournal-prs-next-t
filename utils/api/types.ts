@@ -27,6 +27,20 @@ export type PostItem = {
     createdAt: string;
     updatedAt: string;
     tags?: string;
-    user:ResponseUserTypes,
+    user: ResponseUserTypes,
     views?: number;
 } & PostTypes;
+
+export type CommentTypes = {
+    postId: number;
+    text: string;
+}
+
+export type CommentItem = {
+    id: number;
+    text: string;
+    post: PostItem;
+    user: ResponseUserTypes;
+    createdAt: string;
+    updatedAt: string;
+}
