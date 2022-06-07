@@ -3,8 +3,8 @@ import { CommentItem, CommentTypes } from './types';
 
 
 export const commentsApi = (instance: AxiosInstance) => ({
-    async getAll(): Promise<CommentItem[]> {
-        const { data } = await instance.get('comments');
+    async getAll(postId?: number): Promise<CommentItem[]> {
+        const { data } = await instance.get('comments', { params: { postId } });
         return data;
     },
     async create(dto: CommentTypes): Promise<CommentItem> {
@@ -12,6 +12,6 @@ export const commentsApi = (instance: AxiosInstance) => ({
         return data;
     },
     async remove(id: number) {
-        return await instance.delete('comments/' + id );
+        return await instance.delete('comments/' + id);
     }
 });

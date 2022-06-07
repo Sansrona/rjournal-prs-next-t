@@ -12,8 +12,15 @@ import {
 
 import { MainLayout } from '../layouts/MainLayout';
 import { FollowButton } from '../components/FollowButton';
+import { GetServerSideProps, NextPage } from 'next';
+import { Api } from '../utils/api';
+import { ResponseUserTypes } from '../utils/api/types';
 
-export default function Rating() {
+interface RatingPageProps {
+  users: ResponseUserTypes[];
+}
+
+const Rating: NextPage<RatingPageProps> = ({ users }) => {
   return (
     <MainLayout>
       <Paper className="pl-20 pt-20 pr-20 mb-20" elevation={0}>
@@ -41,18 +48,40 @@ export default function Rating() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <span className="mr-15">1</span>Вася Пупкин
-              </TableCell>
-              <TableCell align="right">540</TableCell>
-              <TableCell align="right">
-                <FollowButton />
-              </TableCell>
-            </TableRow>
+            {users && users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell component="th" scope="row">
+                  <span className="mr-15">{user.id}</span>{user.fullName}
+                </TableCell>
+                <TableCell align="right">{user.commentsCount * 2}</TableCell>
+                <TableCell align="right">
+                  <FollowButton />
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Paper>
     </MainLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  try {
+    const users = await Api().user.getAll();
+    return {
+      props: {
+        users
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return {
+    props: {
+      users: null,
+    }
+  }
+}
+
+export default Rating;

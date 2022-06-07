@@ -15,6 +15,7 @@ export type ResponseUserTypes = {
     email: string,
     access_token: string,
     id: number,
+    commentsCount?: number;
 }
 
 export type PostTypes = {
@@ -43,4 +44,8 @@ export type CommentItem = {
     user: ResponseUserTypes;
     createdAt: string;
     updatedAt: string;
+}
+
+export type SearchDTO = {
+    title: string;
 }

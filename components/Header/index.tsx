@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Paper, Button, IconButton, Avatar, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
+import { Paper, Button, IconButton, Avatar, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, ListItem, List } from '@material-ui/core';
 import {
   SearchOutlined as SearchIcon,
   CreateOutlined as PenIcon,
@@ -15,10 +15,14 @@ import styles from './Header.module.scss';
 import { AuthDialog } from '../AuthDialog';
 import { selectUserData } from '../../redux/slices/user';
 import { useAppSelector } from '../../redux/hooks';
+import { PostItem } from '../../utils/api/types';
+import { Api } from '../../utils/api';
 
 export const Header: React.FC = () => {
   const userData = useAppSelector(selectUserData);
   const [isAuthVisible, setIsAuthVisible] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState('');
+  const [posts, setPosts] = React.useState<PostItem[]>();
 
   const openAuthDialog = () => {
     setIsAuthVisible(true);
@@ -27,6 +31,17 @@ export const Header: React.FC = () => {
   const closeAuthDialog = () => {
     setIsAuthVisible(false);
   };
+
+  const onSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value)
+    try {
+      const {items} = await Api().post.search({ title: e.target.value });
+      setPosts(items);
+    } catch (error) {
+      console.warn(error);
+
+    }
+  }
 
   React.useEffect(() => {
     if (isAuthVisible && userData) {
@@ -49,7 +64,20 @@ export const Header: React.FC = () => {
 
         <div className={styles.searchBlock}>
           <SearchIcon />
-          <input placeholder="Поиск" />
+          <input value={searchValue} onChange={onSearch} placeholder="Поиск" />
+          {posts?.length > 0 && (
+            <Paper className={styles.searchBlockPopup}>
+              <List>
+                {posts.map(post => (
+                  <Link key={post.id} href={`/news/${post.id}`}>
+                    <a>
+                      <ListItem button>{post.title}</ListItem>
+                    </a>
+                  </Link>
+                ))}
+              </List>
+            </Paper>
+          )}
         </div>
 
         <Link href="/write">

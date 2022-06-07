@@ -43,8 +43,8 @@ export const Comment: React.FC<CommentPostProps> = ({ id, user, text, createdAt,
   return (
     <div className={styles.comment}>
       <div className={styles.userInfo}>
-        <Avatar>{user.fullName[0]}</Avatar>
-        <b className="ml-5">{user.fullName}</b>
+        <Avatar className="mr-15">{user.fullName[0]}</Avatar>
+        <b>{user.fullName}</b>
         <span>{createdAt}</span>
       </div>
       <Typography className={styles.text}>

@@ -1,10 +1,14 @@
 import { AxiosInstance } from 'axios';
-import { PostItem, PostTypes } from './types';
+import { PostItem, PostTypes, SearchDTO } from './types';
 
 
 export const postsApi = (instance: AxiosInstance) => ({
     async getAll(): Promise<PostItem[]> {
         const { data } = await instance.get('posts');
+        return data;
+    },
+    async search(query: SearchDTO): Promise<{items: PostItem[]}> {
+        const { data } = await instance.get('posts/search', {params: query});
         return data;
     },
     async getPostById(id: number): Promise<PostItem> {

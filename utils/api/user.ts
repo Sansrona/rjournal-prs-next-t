@@ -3,6 +3,10 @@ import { CreateUserTypes, LoginTypes, ResponseUserTypes } from './types';
 
 
 export const usersApi = (instance: AxiosInstance) => ({
+    async getAll(): Promise<ResponseUserTypes[]> {
+        const { data } = await instance.get('users');
+        return data;
+    },
     async register(dto: CreateUserTypes): Promise<ResponseUserTypes> {
         const { data } = await instance.post('auth/register', dto);
         return data;
